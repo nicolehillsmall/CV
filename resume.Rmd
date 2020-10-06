@@ -1,0 +1,136 @@
+---
+title: Nicole Hill's Resume"
+author: Nicole Hill
+date: "`r Sys.Date()`"
+output:
+  pagedown::html_resume:
+    css: ['css/custom_resume.css', 'css/styles.css', 'resume']
+    # set it to true for a self-contained HTML page but it'll take longer to render
+    self_contained: true
+---
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  results='asis', 
+  echo = FALSE
+)
+library(tidyverse)
+library(glue)
+
+# Set this to true to have links turned into footnotes at the end of the document
+PDF_EXPORT <- FALSE
+
+# Holds all the links that were inserted for placement at the end
+links <- c()
+
+source('parsing_functions.R')
+
+# First let's get the data, filtering to only the items tagged as
+# Resume items
+position_data <- read_csv('positions.csv') %>% 
+  filter(in_resume)
+      TRUE ~ section
+
+```
+
+
+Aside
+================================================================================
+
+
+![logo](beta_dist.png){width=100%}
+
+Contact {#contact}
+--------------------------------------------------------------------------------
+
+
+
+- <i class="fa fa-envelope"></i> nicolemcmxc@gmail.com
+- <i class="fa fa-linkedin"></i> hillnicole
+- <i class="fa fa-github"></i> nicoletriestocode
+- <i class="fa fa-phone"></i> (760) 221-3080
+
+
+
+Language Skills {#skills}
+--------------------------------------------------------------------------------
+
+
+```{r}
+skills <- tribble(
+  ~skill,               ~level,
+  "R",                  4,
+  "CSS/HTML",           3.5,
+  "Python",             1,
+)
+build_skill_bars(skills)
+
+```
+
+
+More info {#more-info}
+--------------------------------------------------------------------------------
+
+Learn more about me at linkedin.com/in/hillnicole
+
+
+Disclaimer {#disclaimer}
+--------------------------------------------------------------------------------
+
+Made w/ [**pagedown**](https://github.com/rstudio/pagedown). 
+
+Source code: [github.com/nstrayer/cv](https://github.com/nstrayer/cv).
+
+Last updated on `r Sys.Date()`.
+
+
+
+
+Main
+================================================================================
+
+Nicole Hill {#title}
+--------------------------------------------------------------------------------
+
+```{r}
+intro_text <- "I am currently pursuing my Master's in Program Evluation and Data Analytics at Arizona State University. 
+
+I put my heart and soul into everything I do and I am not afraid to learn, grow, or take risks. 
+
+From an early age I knew I wanted to chage the world, so I am setting out to do so through technology and data analytics. 
+
+I am looking for oppurtunities with companies who use their position to effect positive change for the world and it's people.
+"
+
+
+cat(sanitize_links(intro_text))
+```
+
+
+
+Education {data-icon=graduation-cap data-concise=true}
+--------------------------------------------------------------------------------
+
+```{r}
+position_data %>% print_section('education')
+```
+
+
+
+Positions {data-icon=suitcase}
+--------------------------------------------------------------------------------
+
+```{r}
+position_data %>% print_section('work_experience')
+```
+
+Projects {data-icon=newspaper}
+--------------------------------------------------------------------------------
+
+
+```{r}
+position_data %>% print_section('coding_projects')
+```
+
+
